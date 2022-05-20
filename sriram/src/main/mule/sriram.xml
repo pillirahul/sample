@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="22ecab81-840b-4001-abc0-d9116690e148" >
+		<http:listener-connection host="localhost" port="8080" />
+	</http:listener-config>
+	<flow name="sriramFlow" doc:id="385c2dd4-f22f-4204-bcea-e2ff976664d8" >
+		<http:listener doc:name="Listener" doc:id="1512c13f-247f-4b8e-a9fe-2443fafb7e07" config-ref="HTTP_Listener_config" path="hellooo" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="sriram Logger" doc:id="ee23ad1c-94c3-4621-af58-4a99e0fa3e87" message="Hi all this is Pilli Rahul......"/>
+		<async doc:name="Async" doc:id="b2229ca8-4952-42bc-8073-685a506951ac" >
+			<logger level="INFO" doc:name="one" doc:id="873b7ddd-1529-40bd-99f2-8065d04ab569" message="one"/>
+			<logger level="INFO" doc:name="two" doc:id="da2da404-f5f1-4e2a-a7c3-581d7538d39c" message="two"/>
+			<logger level="INFO" doc:name="three" doc:id="75a0d4a3-b4af-4703-92d3-67d01873c200" message="three"/>
+			<logger level="INFO" doc:name="four" doc:id="c23d5f3d-edad-4f87-b308-aec8c235934b" message="four"/>
+		</async>
+		<async doc:name="Async" doc:id="033d1127-8d4a-4a6e-8860-96535b0b9091" >
+			<logger level="INFO" doc:name="five" doc:id="fe4ffeb5-414e-4526-88ab-cb6ec8c30fce" message="five" />
+		</async>
+		<async doc:name="Async" doc:id="e4c6bf17-7360-46d3-8b51-55b7a65385d2" >
+			<flow-ref doc:name="subFlow Reference" doc:id="8651045a-765c-4080-9095-338348a69686" name="sriramSub_Flow" />
+		</async>
+		<logger level="INFO" doc:name="start" doc:id="7cda6af0-7ee4-48e1-a726-6f6e11ef9714" message="start"/>
+		<flow-ref doc:name="private Flow Reference" doc:id="d0d9d7a0-19a7-4cde-ba95-bc5cd95f3655" name="privateFlow1" />
+		<logger level="INFO" doc:name="end" doc:id="cfe51561-1a39-4cc7-8d80-28c048b86ebc" message="end"/>
+	</flow>
+	<sub-flow name="sriramSub_Flow" doc:id="da3ef671-3e33-4288-be85-24d30eee6af7" >
+		<logger level="INFO" doc:name="Logger" doc:id="76dce638-4c66-4f4d-b488-d2d2f645ee82" message="hey this is sub flow srirama"/>
+	</sub-flow>
+	<flow name="privateFlow1" doc:id="7dd678df-6090-49cf-9233-36b96aa695af" >
+		<logger level="INFO" doc:name="Logger" doc:id="06f156b0-1b8d-4148-8f5d-54e379c02030" message="hey boss this is private flow"/>
+	</flow>
+</mule>
