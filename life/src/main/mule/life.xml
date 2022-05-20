@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f238a3c3-bdf7-4461-bf35-1d0445d9f9ea" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="b2d02c0e-826a-4987-bbcd-f5054b8ad075" />
+	<flow name="lifeFlow" doc:id="99e2ddba-1424-4c47-8002-632752a181ea" >
+		<file:listener doc:name="On New or Updated File" doc:id="7422a34f-4f3b-4170-a258-b9e21b7b7dae" config-ref="File_Config" directory="C:\Users\rahul\OneDrive\Desktop\File" moveToDirectory="C:\Users\rahul\OneDrive\Desktop\Target" renameTo="rama.txt">
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="MINUTES" />
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="c5b8270c-4997-4f6d-ac12-798b9b5b5b15" message="#[payload]"/>
+	</flow>
+</mule>
