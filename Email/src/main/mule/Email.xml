@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b3a39c4c-fde3-4356-aad6-73c5b26209a3" >
+		<http:listener-connection host="localhost" port="8080" />
+	</http:listener-config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="a1ce62d4-e369-4b5c-8ea0-16776381079c" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="rahul.pilli5@gmail.com" password="RAMA@1970" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="fd48ed96-5729-4e00-beed-8abaa8fecc87" />
+	<flow name="EmailFlow" doc:id="8cf60510-57d8-4633-beef-9a8856fbdb6a" >
+		<http:listener doc:name="Listener" doc:id="5eb3a60c-e5db-406c-9507-de9f5fed49c4" config-ref="HTTP_Listener_config" path="email"/>
+		<file:read doc:name="Read" doc:id="2a922dee-67e0-407c-9552-c89de0acaf8b" config-ref="File_Config" path="C:\Users\rahul\OneDrive\Desktop\Target\rama.txt"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f3576014-1d15-4e50-80fa-f9f624df9c3e" message="welcome to mail"/>
+		<email:send doc:name="Send" doc:id="cf4b7e89-d934-4fd5-9334-d4f17bc210c1" config-ref="Email_SMTP" fromAddress="rahul.pilli5@gmail.com" subject="mail from MULESOFT">
+			<email:to-addresses >
+				<email:to-address value="rahul.pilli59@gmail.com" />
+			</email:to-addresses>
+			<email:cc-addresses >
+				<email:cc-address value="rahul.pilli5@gmail.com" />
+			</email:cc-addresses>
+			<email:body >
+				<email:content ><![CDATA[HEY WELCOME TO SMTP]]></email:content>
+			</email:body>
+			<email:attachments ><![CDATA[#[{
+	"rama.txt":payload
+	
+	}]]]></email:attachments>
+		</email:send>
+	</flow>
+</mule>
